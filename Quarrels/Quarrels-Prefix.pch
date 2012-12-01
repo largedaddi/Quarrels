@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Quarrels' target in the 'Quarrels' project
+//
+
+#ifdef __OBJC__
+  #import <Foundation/Foundation.h>
+#endif
