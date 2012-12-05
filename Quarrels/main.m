@@ -22,14 +22,14 @@ int main(int argc, const char * argv[])
     [quarrels addOptionWithFlag:@"a"
                           alias:@"add"
                        required:YES
-                        default:nil
+                        preset:nil
                     description:@"for adding"
                         boolean:NO];
     
     [quarrels addOptionWithFlag:@"b"
                           alias:@"bad"
                        required:YES
-                        default:nil
+                        preset:nil
                     description:@"for badding"
                         boolean:NO];
 

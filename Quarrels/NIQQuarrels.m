@@ -87,7 +87,7 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
 - (void)addOptionWithFlag:(NSString *)flag
                     alias:(NSString *)alias
                  required:(BOOL)required
-                  default:(NSString *)def
+                  preset:(NSString *)def
               description:(NSString *)description
                   boolean:(BOOL)boolean
 {
