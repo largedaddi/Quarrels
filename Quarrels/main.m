@@ -7,16 +7,56 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NIQQuarrels.h"
+#import "NIQOption.h"
 
 int main(int argc, const char * argv[])
 {
-
+  
   @autoreleasepool {
-      
-      // insert code here...
-      NSLog(@"Hello, World!");
-      
+    
+    NIQQuarrels *quarrels = [NIQQuarrels argsWithArgc:argc
+                                                 argv:argv];
+    
+//    setter
+    [quarrels addOptionWithFlag:@"a"
+                          alias:@"add"
+                       required:YES
+                        default:nil
+                    description:@"for adding"
+                        boolean:NO];
+    
+    [quarrels addOptionWithFlag:@"b"
+                          alias:@"bad"
+                       required:YES
+                        default:nil
+                    description:@"for badding"
+                        boolean:NO];
+
+//    getter
+    NSString *value = quarrels[@"add"];
+    
+    NSLog(@"value %@", value);
+    
+    value = quarrels[@"bad"];
+    
+    
+    NSLog(@"value %@", value);
+    
+    
+    // Lazy load parse
+    //    NSLog(@"flag: %@", [args add]);
+    //    args[@"add"];
+    //    NSDictionary
+    
+    
+    
+    //    [args help];
+    //    [args provideHelp];
   }
-    return 0;
+  return 0;
 }
+
+
+
 

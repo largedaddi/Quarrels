@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'QuarrelsTests' target in the 'QuarrelsTests' project
+//
+
+#ifdef __OBJC__
+  #import <Cocoa/Cocoa.h>
+#endif
