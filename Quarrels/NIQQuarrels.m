@@ -15,6 +15,8 @@
 - (void)parse;
 - (void)setObject:(id)object
         forOption:(NIQOption *)option;
+- (void)failWithReason:(NSString *)reason;
+- (void)amendHelpWithOption:(NIQOption *)option;
 @end
 
 NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
@@ -24,6 +26,143 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
   NSMutableDictionary *_options;
   NSMutableArray *_orphans;
   BOOL _parsed;
+}
+
+
+#pragma mark - Quarrels
+
++ (NIQQuarrels *)argsWithArgc:(int)argc
+                         argv:(const char **)argv
+{
+  return [[NIQQuarrels alloc] initWithArgc:argc
+                                      argv:argv];
+}
+
+- (id)initWithArgc:(int)argc argv:(const char **)argv
+{
+  self = [super init];
+  if (self) {
+    _orphans = argvToNSMutableArray(argc, argv);
+    _backingDictionary = [[NSMutableDictionary alloc] init];
+    _options = [[NSMutableDictionary alloc] init];
+    _parsed = NO;
+    
+    self.argc = argc;
+    self.argv = [NSArray arrayWithArray:_orphans];
+    self.help = [NSString stringWithFormat:@"\nUsage: ./blah\n\nOptions:\n\n"];
+  }
+  return self;
+}
+
+- (void)addOptionWithFlag:(NSString *)flag
+                    alias:(NSString *)alias
+                 required:(BOOL)required
+                   preset:(NSString *)def
+              description:(NSString *)description
+                  boolean:(BOOL)boolean
+{
+  NIQOption *option = [NIQOption optionWithFlag:flag
+                                          alias:alias
+                                       required:required
+                                         preset:def
+                                    explanation:description
+                                        boolean:boolean];
+  
+  [_options setObject:option
+               forKey:flag];
+  
+  if (alias) {
+    [_options setObject:option
+                 forKey:alias];
+  }
+  
+  [self amendHelpWithOption:option];
+}
+
+- (void)provideHelp
+{
+  if (self.help) {
+    NSLog(@"%@\n\n", self.help);
+  } else {
+    NSLog(@"Can't get no help.");
+  }
+}
+
+#pragma mark - Private
+
+- (void)parse
+{
+  NSMutableArray *argsToBeRemoved = [[NSMutableArray alloc] init];
+  for (int i = 0; i < _orphans.count; i++) {
+    NSString *arg = _orphans[i];
+    if ([arg hasPrefix:@"-"]) {
+      [argsToBeRemoved addObject:[NSNumber numberWithInt:i]];
+      
+      int offset = ([arg hasPrefix:@"--"]) ? 2 : 1;
+      NSString *optionName = [arg substringFromIndex:offset];
+      NIQOption *option = _options[optionName];
+      if (option) {
+        if (option.boolean) {
+          [self setObject:@YES forOption:option];
+        } else {
+          NSString *value = _orphans[i + 1];
+          if ([value hasPrefix:@"-"]) {
+            NSLog(@"No value supplied for %@", optionName);
+            return;
+          }
+          [self setObject:value forOption:option];
+          [argsToBeRemoved addObject:[NSNumber numberWithInt:(i + 1)]];
+        }
+      } else {
+        NSLog(@"No option with the name: %@ found.", optionName);
+      }
+    }
+  }
+  
+  // Check for required options
+  NSPredicate *requiredPredicate = [NSPredicate predicateWithFormat:@"required == YES"];
+  NSArray *requiredOptionsWithDuplicates = [[_options allValues] filteredArrayUsingPredicate:requiredPredicate];
+  NSSet *requiredOptions = [NSSet setWithArray:requiredOptionsWithDuplicates];
+  [requiredOptions enumerateObjectsUsingBlock:^(NIQOption *opt, BOOL *stop) {
+    if (!opt.value) {
+      [self failWithReason:[NSString stringWithFormat:@"-%@ is required.", opt.flag]];
+    }
+  }];
+  
+  // Removed all 
+  [_orphans removeObjectsInArray:argsToBeRemoved];
+}
+
+- (NSString *)valueKeyForOption:(NIQOption *)o
+{
+  NSString *key = (o.alias) ? o.alias : o.flag;
+  return key;
+}
+
+- (void)setObject:(id)object
+        forOption:(NIQOption *)option
+{
+  option.value = object;
+  
+  [self setObject:object
+           forKey:option.flag];
+  
+  if (option.alias) {
+    [self setObject:object
+             forKey:option.alias];
+  }
+}
+
+- (void)failWithReason:(NSString *)reason
+{
+  [self provideHelp];
+  NSLog(@"\nFailed: %@", reason);
+  exit(EXIT_FAILURE);
+}
+
+- (void)amendHelpWithOption:(NIQOption *)option
+{
+  self.help = [_help stringByAppendingFormat:@"  %@", option.description];
 }
 
 #pragma mark - NSDictionary
@@ -58,127 +197,6 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
 - (void)removeObjectForKey:(id)aKey
 {
   [_backingDictionary removeObjectForKey:aKey];
-}
-
-#pragma mark - Quarrels
-
-+ (NIQQuarrels *)argsWithArgc:(int)argc
-                         argv:(const char **)argv
-{
-  return [[NIQQuarrels alloc] initWithArgc:argc
-                                      argv:argv];
-}
-
-- (id)initWithArgc:(int)argc argv:(const char **)argv
-{
-  self = [super init];
-  if (self) {
-    _orphans = argvToNSMutableArray(argc, argv);
-    _backingDictionary = [[NSMutableDictionary alloc] init];
-    _options = [[NSMutableDictionary alloc] init];
-    _parsed = NO;
-    
-    self.argc = argc;
-    self.argv = [NSArray arrayWithArray:_orphans];
-  }
-  return self;
-}
-
-- (void)addOptionWithFlag:(NSString *)flag
-                    alias:(NSString *)alias
-                 required:(BOOL)required
-                  preset:(NSString *)def
-              description:(NSString *)description
-                  boolean:(BOOL)boolean
-{
-  NIQOption *option = [NIQOption optionWithFlag:flag
-                                          alias:alias
-                                       required:required
-                                        preset:def
-                                    description:description
-                                        boolean:boolean];
-  [_options setObject:option
-                   forKey:flag];
-  
-  if (alias) {
-    [_options setObject:option
-                     forKey:alias];
-  }
-  
-  NSLog(@"add option: %@", _options);
-  
-}
-
-- (NSString *)help
-{
- return @"help";
-}
-
-- (void)provideHelp
-{
-  NSLog(@"%@", [self help]);
-}
-
-#pragma mark - Private
-
-- (void)parse
-{
-  NSLog(@"parse!");
-  NSMutableArray *argsToBeRemoved = [[NSMutableArray alloc] init];
-  for (int i = 0; i < _orphans.count; i++) {
-    NSString *arg = _orphans[i];
-    if ([arg hasPrefix:@"-"]) {
-      [argsToBeRemoved addObject:[NSNumber numberWithInt:i]];
-      
-      int offset = ([arg hasPrefix:@"--"]) ? 2 : 1;
-      NSString *optionName = [arg substringFromIndex:offset];
-      NIQOption *option = _options[optionName];
-      
-      if (!option) {
-        NSLog(@"No option with the name: %@ found.", optionName);
-        exit(0);
-        return;
-      }
-      
-      if (option.boolean) {
-        [self setObject:@YES forOption:option];
-      } else {
-        NSString *value = _orphans[i + 1];
-        if ([value hasPrefix:@"-"]) {
-          NSLog(@"No value supplied for %@", optionName);
-          return;
-        }
-        [self setObject:value forOption:option];
-        [argsToBeRemoved addObject:[NSNumber numberWithInt:(i + 1)]];
-      }
-      
-    }
-    
-  }
-  
-  
-  
-  [_orphans removeObjectsInArray:argsToBeRemoved];
-}
-
-- (NSString *)valueKeyForOption:(NIQOption *)o
-{
-  NSString *key = (o.alias) ? o.alias : o.flag;
-  return key;
-}
-
-- (void)setObject:(id)object
-        forOption:(NIQOption *)option
-{
-  option.value = object;
-  
-  [self setObject:object
-           forKey:option.flag];
-  
-  if (option.alias) {
-    [self setObject:object
-             forKey:option.alias];
-  }
 }
 
 @end

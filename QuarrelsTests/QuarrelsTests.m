@@ -9,25 +9,99 @@
 #import "QuarrelsTests.h"
 #import "NIQQuarrels.h"
 
-@implementation QuarrelsTests
+const char ** initArgv (int argc, NSArray *args);
+
+@implementation QuarrelsTests {
+  NIQQuarrels *qSmall;
+  NIQQuarrels *qBig;
+}
 
 - (void)setUp
 {
-    [super setUp];
-    
-    // Set-up code here.
+  [super setUp];
+  NSArray *args = @[@"progname", @"-a", @"yeehaw!"];
+  int argc = (int)args.count;
+  const char **argvSmall = initArgv(argc, args);
+  qSmall = [NIQQuarrels argsWithArgc:argc
+                                argv:argvSmall];
+  free(argvSmall);
+  
+  args = @[@"progname", @"-a", @"yeehaw!", @"-b", @"brewbird!", @"oliver twist", @"wolverine", @"--strike", @"out"];
+  argc = (int)args.count;
+  const char **argvLarge = initArgv(argc, args);
+  qBig = [NIQQuarrels argsWithArgc:argc
+                              argv:argvLarge];
+  free(argvLarge);
 }
 
 - (void)tearDown
 {
-    // Tear-down code here.
-    
-    [super tearDown];
+  [super tearDown];
 }
 
-- (void)testExample
+- (void)testFlag
 {
-    STFail(@"Unit tests are not implemented yet in QuarrelsTests");
+  [qSmall addOptionWithFlag:@"a"
+                      alias:nil
+                   required:YES
+                     preset:nil
+                description:nil
+                    boolean:NO];
+
+  STAssertEqualObjects(@"yeehaw!", qSmall[@"a"], nil);
+}
+
+- (void)testAlias
+{
+  [qBig addOptionWithFlag:@"s"
+                    alias:@"strike"
+                 required:YES
+                   preset:nil
+              description:nil
+                  boolean:NO];
+
+  STAssertEqualObjects(@"out", qBig[@"strike"], nil);
+}
+
+- (void)testRequired
+{
+  [qSmall addOptionWithFlag:@"f"
+                      alias:@"faen"
+                   required:YES
+                     preset:nil
+                description:nil
+                    boolean:NO];
+   
+  NSString *f = nil;
+  STAssertThrows(f = qSmall[@"f"], nil);
+}
+
+- (void)testPreset
+{
+
+}
+
+- (void)testDescription
+{
+
+}
+
+- (void)testBoolean
+{
+
+}
+
+- (void)testHelp
+{
+  
 }
 
 @end
+
+const char ** initArgv (int argc, NSArray *args) {
+  const char **argv = malloc(sizeof(const char *) * argc);
+  for (int i = 0; i < argc; i++) {
+    argv[i] = [args[i] UTF8String];
+  }
+  return argv;
+}

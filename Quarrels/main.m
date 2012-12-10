@@ -18,7 +18,6 @@ int main(int argc, const char * argv[])
     NIQQuarrels *quarrels = [NIQQuarrels argsWithArgc:argc
                                                  argv:argv];
     
-//    setter
     [quarrels addOptionWithFlag:@"a"
                           alias:@"add"
                        required:YES
@@ -28,31 +27,21 @@ int main(int argc, const char * argv[])
     
     [quarrels addOptionWithFlag:@"b"
                           alias:@"bad"
-                       required:YES
+                       required:NO
                         preset:nil
                     description:@"for badding"
                         boolean:NO];
 
-//    getter
     NSString *value = quarrels[@"add"];
     
     NSLog(@"value %@", value);
     
     value = quarrels[@"bad"];
-    
-    
-    NSLog(@"value %@", value);
-    
-    
-    // Lazy load parse
-    //    NSLog(@"flag: %@", [args add]);
-    //    args[@"add"];
-    //    NSDictionary
-    
-    
-    
-    //    [args help];
-    //    [args provideHelp];
+    if (value) {
+      NSLog(@"value %@", value);
+    }
+   
+    [quarrels provideHelp];
   }
   return 0;
 }

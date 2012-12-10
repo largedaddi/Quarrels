@@ -43,11 +43,12 @@
               description:(NSString *)description
                   boolean:(BOOL)boolean;
 
-- (NSString *)help;
-
 - (void)provideHelp;
 
 @property (nonatomic, assign) int argc;
 @property (nonatomic, strong) NSArray *argv;
+
+// Assigned after parse
+@property (nonatomic, copy) NSString *help;
 
 @end
