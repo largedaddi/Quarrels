@@ -19,14 +19,14 @@ const char ** initArgv (int argc, NSArray *args);
 - (void)setUp
 {
   [super setUp];
-  NSArray *args = @[@"progname", @"-a", @"yeehaw!"];
+  NSArray *args = @[@"progname", @"-a", @"yeehaw!", @"-x"];
   int argc = (int)args.count;
   const char **argvSmall = initArgv(argc, args);
   qSmall = [NIQQuarrels argsWithArgc:argc
                                 argv:argvSmall];
   free(argvSmall);
   
-  args = @[@"progname", @"-a", @"yeehaw!", @"-b", @"brewbird!", @"oliver twist", @"wolverine", @"--strike", @"out"];
+  args = @[@"progname", @"-a", @"yeehaw!", @"-b", @"brewbird!", @"oliver twist", @"wolverine", @"--strike", @"out", @"-m"];
   argc = (int)args.count;
   const char **argvLarge = initArgv(argc, args);
   qBig = [NIQQuarrels argsWithArgc:argc
@@ -45,7 +45,7 @@ const char ** initArgv (int argc, NSArray *args);
                       alias:nil
                    required:YES
                      preset:nil
-                description:nil
+                explanation:nil
                     boolean:NO];
 
   STAssertEqualObjects(@"yeehaw!", qSmall[@"a"], nil);
@@ -57,10 +57,11 @@ const char ** initArgv (int argc, NSArray *args);
                     alias:@"strike"
                  required:YES
                    preset:nil
-              description:nil
+              explanation:nil
                   boolean:NO];
 
   STAssertEqualObjects(@"out", qBig[@"strike"], nil);
+  STAssertEqualObjects(@"out", qBig[@"s"], nil);
 }
 
 - (void)testRequired
@@ -69,7 +70,7 @@ const char ** initArgv (int argc, NSArray *args);
                       alias:@"faen"
                    required:YES
                      preset:nil
-                description:nil
+                explanation:nil
                     boolean:NO];
    
   NSString *f = nil;
@@ -78,22 +79,37 @@ const char ** initArgv (int argc, NSArray *args);
 
 - (void)testPreset
 {
-
-}
-
-- (void)testDescription
-{
-
+  [qSmall addOptionWithFlag:@"m"
+                      alias:@"meow"
+                   required:YES
+                     preset:@"lions breath"
+                explanation:nil
+                    boolean:NO];
+  STAssertEqualObjects(@"lions breath", qSmall[@"m"], nil);
+  STAssertEqualObjects(@"lions breath", qSmall[@"meow"], nil);
 }
 
 - (void)testBoolean
 {
-
+  [qSmall addOptionWithFlag:@"x"
+                      alias:nil
+                   required:YES
+                     preset:nil
+                explanation:nil
+                    boolean:YES];
+  
+  STAssertEquals(@YES, qSmall[@"x"], nil);
 }
 
 - (void)testHelp
 {
-  
+//  [qSmall addOptionWithFlag:@"a"
+//                      alias:nil
+//                   required:YES
+//                     preset:nil
+//                explanation:@"adds a yeehaw!"
+//                    boolean:NO];
+//  STAssertEqualObjects(@"adds a yeehaw!", qSmall[@"a"], nil);
 }
 
 @end

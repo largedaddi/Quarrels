@@ -40,7 +40,7 @@
                     alias:(NSString *)alias
                  required:(BOOL)required
                   preset:(NSString *)def
-              description:(NSString *)description
+              explanation:(NSString *)explanation
                   boolean:(BOOL)boolean;
 
 - (void)provideHelp;

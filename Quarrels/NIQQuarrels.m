@@ -58,14 +58,14 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
                     alias:(NSString *)alias
                  required:(BOOL)required
                    preset:(NSString *)def
-              description:(NSString *)description
+              explanation:(NSString *)explanation
                   boolean:(BOOL)boolean
 {
   NIQOption *option = [NIQOption optionWithFlag:flag
                                           alias:alias
                                        required:required
                                          preset:def
-                                    explanation:description
+                                    explanation:explanation
                                         boolean:boolean];
   
   [_options setObject:option
@@ -162,7 +162,7 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
 
 - (void)amendHelpWithOption:(NIQOption *)option
 {
-  self.help = [_help stringByAppendingFormat:@"  %@", option.description];
+  self.help = [_help stringByAppendingFormat:@"  %@", option];
 }
 
 #pragma mark - NSDictionary
