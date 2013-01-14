@@ -1,5 +1,5 @@
 //
-//  NIQQuarrelsD.h
+//  NIQuarrels.h
 //  Quarrels
 //
 //  Created by Sean Pilkenton on 12/3/12.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NIQQuarrels : NSMutableDictionary
+@interface NIQuarrels : NSMutableDictionary
 
 //
 // NSDictionary
@@ -33,7 +33,7 @@
 // Quarrels
 //
 
-+ (NIQQuarrels *)argsWithArgc:(int)argc
++ (NIQuarrels *)argsWithArgc:(int)argc
                          argv:(const char **)argv;
 
 - (void)addOptionWithFlag:(NSString *)flag

@@ -1,5 +1,5 @@
 //
-//  PRMOption.h
+//  NIOption.h
 //  Quarrels
 //
 //  Created by Sean Pilkenton on 11/30/12.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NIQOption : NSObject
+@interface NIOption : NSObject
 
-+ (NIQOption *)optionWithFlag:(NSString *)f
++ (NIOption *)optionWithFlag:(NSString *)f
                         alias:(NSString *)a
                      required:(BOOL)r
                        preset:(NSString *)p

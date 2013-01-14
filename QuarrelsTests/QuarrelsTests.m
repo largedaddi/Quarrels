@@ -7,13 +7,13 @@
 //
 
 #import "QuarrelsTests.h"
-#import "NIQQuarrels.h"
+#import "NIQuarrels.h"
 
 const char ** initArgv (int argc, NSArray *args);
 
 @implementation QuarrelsTests {
-  NIQQuarrels *qSmall;
-  NIQQuarrels *qBig;
+  NIQuarrels *qSmall;
+  NIQuarrels *qBig;
 }
 
 - (void)setUp
@@ -22,14 +22,14 @@ const char ** initArgv (int argc, NSArray *args);
   NSArray *args = @[@"progname", @"-a", @"yeehaw!", @"-x"];
   int argc = (int)args.count;
   const char **argvSmall = initArgv(argc, args);
-  qSmall = [NIQQuarrels argsWithArgc:argc
+  qSmall = [NIQuarrels argsWithArgc:argc
                                 argv:argvSmall];
   free(argvSmall);
   
   args = @[@"progname", @"-a", @"yeehaw!", @"-b", @"brewbird!", @"oliver twist", @"wolverine", @"--strike", @"out", @"-m"];
   argc = (int)args.count;
   const char **argvLarge = initArgv(argc, args);
-  qBig = [NIQQuarrels argsWithArgc:argc
+  qBig = [NIQuarrels argsWithArgc:argc
                               argv:argvLarge];
   free(argvLarge);
 }

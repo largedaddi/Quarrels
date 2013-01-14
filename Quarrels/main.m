@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NIQQuarrels.h"
-#import "NIQOption.h"
+#import "NIQuarrels.h"
+#import "NIOption.h"
 
 int main(int argc, const char * argv[])
 {
   
   @autoreleasepool {
     
-    NIQQuarrels *quarrels = [NIQQuarrels argsWithArgc:argc
+    NIQuarrels *quarrels = [NIQuarrels argsWithArgc:argc
                                                  argv:argv];
     
     [quarrels addOptionWithFlag:@"a"

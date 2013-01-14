@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6621089A166E7C99006FDBBD /* NIQOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 6695D298166A601300D396E5 /* NIQOption.m */; };
-		6621089B166E7CA2006FDBBD /* NIQQuarrels.m in Sources */ = {isa = PBXBuildFile; fileRef = 66353C7F166D104C0087C047 /* NIQQuarrels.m */; };
+		6621089A166E7C99006FDBBD /* NIOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 6695D298166A601300D396E5 /* NIOption.m */; };
+		6621089B166E7CA2006FDBBD /* NIQuarrels.m in Sources */ = {isa = PBXBuildFile; fileRef = 66353C7F166D104C0087C047 /* NIQuarrels.m */; };
 		662E5DF6166C240B00A8E4C2 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662E5DF5166C240B00A8E4C2 /* SenTestingKit.framework */; };
 		662E5DF8166C240B00A8E4C2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662E5DF7166C240B00A8E4C2 /* Cocoa.framework */; };
 		662E5E02166C240B00A8E4C2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 662E5E00166C240B00A8E4C2 /* InfoPlist.strings */; };
 		662E5E05166C240B00A8E4C2 /* QuarrelsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 662E5E04166C240B00A8E4C2 /* QuarrelsTests.m */; };
-		66353C80166D104C0087C047 /* NIQQuarrels.m in Sources */ = {isa = PBXBuildFile; fileRef = 66353C7F166D104C0087C047 /* NIQQuarrels.m */; };
+		66353C80166D104C0087C047 /* NIQuarrels.m in Sources */ = {isa = PBXBuildFile; fileRef = 66353C7F166D104C0087C047 /* NIQuarrels.m */; };
 		6695D284166A5FC000D396E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6695D283166A5FC000D396E5 /* Foundation.framework */; };
 		6695D287166A5FC000D396E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6695D286166A5FC000D396E5 /* main.m */; };
 		6695D28B166A5FC000D396E5 /* Quarrels.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6695D28A166A5FC000D396E5 /* Quarrels.1 */; };
-		6695D29C166A60D800D396E5 /* NIQOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 6695D298166A601300D396E5 /* NIQOption.m */; };
+		6695D29C166A60D800D396E5 /* NIOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 6695D298166A601300D396E5 /* NIOption.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,15 +45,15 @@
 		662E5E03166C240B00A8E4C2 /* QuarrelsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuarrelsTests.h; sourceTree = "<group>"; };
 		662E5E04166C240B00A8E4C2 /* QuarrelsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuarrelsTests.m; sourceTree = "<group>"; };
 		662E5E06166C240B00A8E4C2 /* QuarrelsTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QuarrelsTests-Prefix.pch"; sourceTree = "<group>"; };
-		66353C7E166D104C0087C047 /* NIQQuarrels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIQQuarrels.h; sourceTree = "<group>"; };
-		66353C7F166D104C0087C047 /* NIQQuarrels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIQQuarrels.m; sourceTree = "<group>"; };
+		66353C7E166D104C0087C047 /* NIQuarrels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIQuarrels.h; sourceTree = "<group>"; };
+		66353C7F166D104C0087C047 /* NIQuarrels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIQuarrels.m; sourceTree = "<group>"; };
 		6695D27F166A5FC000D396E5 /* Quarrels */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Quarrels; sourceTree = BUILT_PRODUCTS_DIR; };
 		6695D283166A5FC000D396E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6695D286166A5FC000D396E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6695D289166A5FC000D396E5 /* Quarrels-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Quarrels-Prefix.pch"; sourceTree = "<group>"; };
 		6695D28A166A5FC000D396E5 /* Quarrels.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Quarrels.1; sourceTree = "<group>"; };
-		6695D297166A601300D396E5 /* NIQOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIQOption.h; sourceTree = "<group>"; };
-		6695D298166A601300D396E5 /* NIQOption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NIQOption.m; sourceTree = "<group>"; };
+		6695D297166A601300D396E5 /* NIOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIOption.h; sourceTree = "<group>"; };
+		6695D298166A601300D396E5 /* NIOption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NIOption.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,10 +141,10 @@
 			isa = PBXGroup;
 			children = (
 				6695D286166A5FC000D396E5 /* main.m */,
-				6695D297166A601300D396E5 /* NIQOption.h */,
-				6695D298166A601300D396E5 /* NIQOption.m */,
-				66353C7E166D104C0087C047 /* NIQQuarrels.h */,
-				66353C7F166D104C0087C047 /* NIQQuarrels.m */,
+				6695D297166A601300D396E5 /* NIOption.h */,
+				6695D298166A601300D396E5 /* NIOption.m */,
+				66353C7E166D104C0087C047 /* NIQuarrels.h */,
+				66353C7F166D104C0087C047 /* NIQuarrels.m */,
 				6695D28A166A5FC000D396E5 /* Quarrels.1 */,
 				6695D288166A5FC000D396E5 /* Supporting Files */,
 			);
@@ -257,8 +257,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				662E5E05166C240B00A8E4C2 /* QuarrelsTests.m in Sources */,
-				6621089A166E7C99006FDBBD /* NIQOption.m in Sources */,
-				6621089B166E7CA2006FDBBD /* NIQQuarrels.m in Sources */,
+				6621089A166E7C99006FDBBD /* NIOption.m in Sources */,
+				6621089B166E7CA2006FDBBD /* NIQuarrels.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,8 +267,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6695D287166A5FC000D396E5 /* main.m in Sources */,
-				6695D29C166A60D800D396E5 /* NIQOption.m in Sources */,
-				66353C80166D104C0087C047 /* NIQQuarrels.m in Sources */,
+				6695D29C166A60D800D396E5 /* NIOption.m in Sources */,
+				66353C80166D104C0087C047 /* NIQuarrels.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

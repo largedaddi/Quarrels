@@ -1,27 +1,27 @@
 //
-//  NIQQuarrelsD.m
+//  NIQuarrels.m
 //  Quarrels
 //
 //  Created by Sean Pilkenton on 12/3/12.
 //  Copyright (c) 2012 Near Infinity. All rights reserved.
 //
 
-#import "NIQQuarrels.h"
-#import "NIQOption.h"
+#import "NIQuarrels.h"
+#import "NIOption.h"
 
-@interface NIQQuarrels ()
+@interface NIQuarrels ()
 - (id)initWithArgc:(int)argc
               argv:(const char **)argv;
 - (void)parse;
 - (void)setObject:(id)object
-        forOption:(NIQOption *)option;
+        forOption:(NIOption *)option;
 - (void)failWithReason:(NSString *)reason;
-- (void)amendHelpWithOption:(NIQOption *)option;
+- (void)amendHelpWithOption:(NIOption *)option;
 @end
 
 NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
 
-@implementation NIQQuarrels {
+@implementation NIQuarrels {
   NSMutableDictionary *_backingDictionary;
   NSMutableDictionary *_options;
   NSMutableArray *_orphans;
@@ -31,10 +31,10 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
 
 #pragma mark - Quarrels
 
-+ (NIQQuarrels *)argsWithArgc:(int)argc
++ (NIQuarrels *)argsWithArgc:(int)argc
                          argv:(const char **)argv
 {
-  return [[NIQQuarrels alloc] initWithArgc:argc
+  return [[NIQuarrels alloc] initWithArgc:argc
                                       argv:argv];
 }
 
@@ -61,7 +61,7 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
               explanation:(NSString *)explanation
                   boolean:(BOOL)boolean
 {
-  NIQOption *option = [NIQOption optionWithFlag:flag
+  NIOption *option = [NIOption optionWithFlag:flag
                                           alias:alias
                                        required:required
                                          preset:def
@@ -100,7 +100,7 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
       
       int offset = ([arg hasPrefix:@"--"]) ? 2 : 1;
       NSString *optionName = [arg substringFromIndex:offset];
-      NIQOption *option = _options[optionName];
+      NIOption *option = _options[optionName];
       if (option) {
         if (option.boolean) {
           [self setObject:@YES forOption:option];
@@ -123,7 +123,7 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
   NSPredicate *requiredPredicate = [NSPredicate predicateWithFormat:@"required == YES"];
   NSArray *requiredOptionsWithDuplicates = [[_options allValues] filteredArrayUsingPredicate:requiredPredicate];
   NSSet *requiredOptions = [NSSet setWithArray:requiredOptionsWithDuplicates];
-  [requiredOptions enumerateObjectsUsingBlock:^(NIQOption *opt, BOOL *stop) {
+  [requiredOptions enumerateObjectsUsingBlock:^(NIOption *opt, BOOL *stop) {
     if (!opt.value) {
       [self failWithReason:[NSString stringWithFormat:@"-%@ is required.", opt.flag]];
     }
@@ -133,14 +133,14 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
   [_orphans removeObjectsInArray:argsToBeRemoved];
 }
 
-- (NSString *)valueKeyForOption:(NIQOption *)o
+- (NSString *)valueKeyForOption:(NIOption *)o
 {
   NSString *key = (o.alias) ? o.alias : o.flag;
   return key;
 }
 
 - (void)setObject:(id)object
-        forOption:(NIQOption *)option
+        forOption:(NIOption *)option
 {
   option.value = object;
   
@@ -160,7 +160,7 @@ NSMutableArray *argvToNSMutableArray (int argc, const char * argv[]);
   exit(EXIT_FAILURE);
 }
 
-- (void)amendHelpWithOption:(NIQOption *)option
+- (void)amendHelpWithOption:(NIOption *)option
 {
   self.help = [_help stringByAppendingFormat:@"  %@", option];
 }

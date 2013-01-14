@@ -1,27 +1,27 @@
 //
-//  PRMOption.m
+//  NIOption.m
 //  Quarrels
 //
 //  Created by Sean Pilkenton on 11/30/12.
 //
 //
 
-#import "NIQOption.h"
+#import "NIOption.h"
 #import <objc/runtime.h>
 
-@interface NIQOption ()
+@interface NIOption ()
 @end
 
-@implementation NIQOption
+@implementation NIOption
 
-+ (NIQOption *)optionWithFlag:(NSString *)f
++ (NIOption *)optionWithFlag:(NSString *)f
                         alias:(NSString *)a
                      required:(BOOL)r
                        preset:(NSString *)p
                   explanation:(NSString *)e
                       boolean:(BOOL)b
 {
-  return [[NIQOption alloc] initWithFlag:f
+  return [[NIOption alloc] initWithFlag:f
                                    alias:a
                                 required:r
                                   preset:p
